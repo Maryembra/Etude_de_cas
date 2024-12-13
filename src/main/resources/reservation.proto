@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.projetresergraphql.stubs";
+option java_outer_classname = "ReservationProto";
+
+service ReservationService {
+  // Récupérer toutes les réservations
+  rpc AllReservations (GetAllReservationsRequest) returns (GetAllReservationsResponse);
+
+  // Créer une nouvelle réservation
+  rpc SaveReservation (SaveReservationRequest) returns (SaveReservationResponse);
+
+  // Récupérer une réservation par ID
+  rpc ReservationById (GetReservationByIdRequest) returns (GetReservationByIdResponse);
+
+  // Supprimer une réservation par ID
+  rpc DeleteReservationById (DeleteReservationRequest) returns (DeleteReservationResponse);
+
+  // Récupérer les réservations par ID de client
+  rpc ReservationsByClientId (GetReservationsByClientRequest) returns (GetReservationsByClientResponse);
+  rpc UpdateReservation (UpdateReservationRequest) returns (UpdateReservationResponse);
+}
+
+// Message représentant une réservation
+message ReservationGrpc {
+  string id = 1;
+  string clientId = 2;
+  string chambreId = 3;
+  string dateDebut = 4; // Format ISO 8601
+  string dateFin = 5;   // Format ISO 8601
+  string preferences = 6;
+}
+
+// Requêtes et réponses
+message GetAllReservationsRequest {}
+message GetAllReservationsResponse {
+  repeated ReservationGrpc reservations = 1;
+}
+
+message SaveReservationRequest {
+  ReservationGrpc reservation = 1;
+}
+message SaveReservationResponse {
+  ReservationGrpc reservation = 1;
+}
+
+message GetReservationByIdRequest {
+  string id = 1;
+}
+message GetReservationByIdResponse {
+  ReservationGrpc reservation = 1;
+}
+
+message DeleteReservationRequest {
+  string id = 1;
+}
+message UpdateReservationRequest {
+  string id = 1;
+  ReservationGrpc reservation = 2;
+}
+
+message UpdateReservationResponse {
+  ReservationGrpc reservation = 1;
+}
+
+message DeleteReservationResponse {
+  string message = 1;
+  bool success = 2;
+}
+
+message GetReservationsByClientRequest {
+  string clientId = 1;
+}
+message GetReservationsByClientResponse {
+  repeated ReservationGrpc reservations = 1;
+}
